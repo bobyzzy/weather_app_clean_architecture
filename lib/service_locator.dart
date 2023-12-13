@@ -11,8 +11,10 @@ import 'package:waether_app_using_api_openweather/features/weather/data/reposito
 import 'package:waether_app_using_api_openweather/features/weather/domain/repositories/weather_repository.dart';
 import 'package:waether_app_using_api_openweather/features/weather/domain/usecases/get_current_weather_usecase.dart';
 import 'package:waether_app_using_api_openweather/features/weather/domain/usecases/get_forecast_weather_usecase.dart';
+import 'package:waether_app_using_api_openweather/features/weather/domain/usecases/get_search_result_usecase.dart';
 import 'package:waether_app_using_api_openweather/features/weather/presentation/bloc/daily_weather_bloc/daily_weather_cubit.dart';
 import 'package:waether_app_using_api_openweather/features/weather/presentation/bloc/forecast_weather_bloc/forecast_weather_cubit.dart';
+import 'package:waether_app_using_api_openweather/features/weather/presentation/bloc/search_weather_bloc/search_weather_cubit.dart';
 
 final sl = GetIt.instance;
 
@@ -27,9 +29,12 @@ Future<void> init() async {
         geolocationImpl: sl<GeolocationImpl>(),
       ));
 
+  sl.registerFactory(() => SearchWeatherCubit(getSearchResult: sl<GetSearchResult>()));
+
   //Usecases
   sl.registerLazySingleton(() => GetCurrentWeather(sl()));
   sl.registerLazySingleton(() => GetForecastWeather(sl()));
+  sl.registerLazySingleton(() => GetSearchResult(sl()));
 
   //Repository
   sl.registerLazySingleton<WeatherRepository>(() => WeatherRepositoryImpl(

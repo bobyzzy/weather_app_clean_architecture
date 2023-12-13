@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 abstract class RemoteDataSource {
   Future<DailyWeatherModel> getCurrentWeatherRemote(double lat, double lon);
   Future<ForecastWeatherModel> getForecastWeatherRemote(double lat, double lon);
+  Future<DailyWeatherModel> getSearchDataRemote(String query);
 }
 
 class RemoteDataSourceImpl implements RemoteDataSource {
@@ -19,7 +20,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   Future<DailyWeatherModel> getCurrentWeatherRemote(double lat, double lon) async {
     const String api = Constants.API_CLIENT;
     final String url =
-        'https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&units=metric&lang=ru&appid=$api';
+        'https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&lang=ru&units=metric&appid=$api';
     final response = await client.get(Uri.parse(url));
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
@@ -39,6 +40,20 @@ class RemoteDataSourceImpl implements RemoteDataSource {
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       return ForecastWeatherModel.fromJson(data);
+    } else {
+      throw ServerExeption();
+    }
+  }
+
+  Future<DailyWeatherModel> getSearchDataRemote(String query) async {
+    const String api = Constants.API_CLIENT;
+    final String url =
+        'https://api.openweathermap.org/data/2.5/weather?q=$query&lang=ru&units=metric&appid=$api';
+
+    final respone = await client.get(Uri.parse(url));
+    if (respone.statusCode == 200) {
+      final data = json.decode(respone.body);
+      return DailyWeatherModel.fromJson(data);
     } else {
       throw ServerExeption();
     }

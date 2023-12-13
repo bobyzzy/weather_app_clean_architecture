@@ -16,15 +16,12 @@ class WeatherRepositoryImpl implements WeatherRepository {
   final RemoteDataSource remoteDataSource;
   final LocalDataSource localDataSource;
   InternetConnectionChecker networkInfo;
-  //Future<Position> geolocation;
   WeatherRepositoryImpl({
     required this.remoteDataSource,
     required this.localDataSource,
     required this.networkInfo,
-    //required this.geolocation,
   });
 
-//TODO: я тут подумал что можно ли убрать аргументы,если можно геолокатор регистрировать через DI
   @override
   Future<Either<Failure, DailyWeatherEntity>> getDailyWeather(double lat, double lon) async {
     return await _getDailyWeather(() {
@@ -40,9 +37,10 @@ class WeatherRepositoryImpl implements WeatherRepository {
   }
 
   @override
-  Future<Either<Failure, DailyWeatherEntity>> searchCityWeather(String nameCity) {
-    // TODO: implement searchCityWeather
-    throw UnimplementedError();
+  Future<Either<Failure, DailyWeatherEntity>> searchCityWeather(String nameCity) async {
+    return await _getSearchData(() {
+      return remoteDataSource.getSearchDataRemote(nameCity);
+    });
   }
 
   Future<Either<Failure, DailyWeatherEntity>> _getDailyWeather(
@@ -50,6 +48,7 @@ class WeatherRepositoryImpl implements WeatherRepository {
     if (await networkInfo.hasConnection) {
       try {
         final remoteDailyWeather = await getDailyWeather();
+        localDataSource.currentWeatherToCache(remoteDailyWeather);
         return Right(remoteDailyWeather);
       } on ServerExeption {
         return Left(ServerFailure());
@@ -69,6 +68,8 @@ class WeatherRepositoryImpl implements WeatherRepository {
     if (await networkInfo.hasConnection) {
       try {
         final remoteForecastWeather = await getForecastWeather();
+        localDataSource.forecastWeatherToCache(remoteForecastWeather);
+
         return Right(remoteForecastWeather);
       } on ServerExeption {
         return Left(ServerFailure());
@@ -80,6 +81,20 @@ class WeatherRepositoryImpl implements WeatherRepository {
       } on CacheExeption {
         return Left(CacheFailure());
       }
+    }
+  }
+
+  Future<Either<Failure, DailyWeatherEntity>> _getSearchData(
+      Future<DailyWeatherEntity> Function() getSearchData) async {
+    if (await networkInfo.hasConnection) {
+      try {
+        final remoteDailyWeather = await getSearchData();
+        return Right(remoteDailyWeather);
+      } on ServerExeption {
+        return Left(ServerFailure());
+      }
+    } else {
+      throw CacheFailure();
     }
   }
 }

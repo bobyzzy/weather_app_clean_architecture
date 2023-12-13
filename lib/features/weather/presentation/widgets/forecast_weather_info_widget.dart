@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:waether_app_using_api_openweather/core/constants/app_dimens.dart';
@@ -77,6 +76,7 @@ class ForecastWeatherWidget extends StatelessWidget {
                 ),
                 child: ListView.separated(
                   primary: false,
+                  physics: NeverScrollableScrollPhysics(),
                   itemCount: temp(state.forecastWeather).length,
                   padding: EdgeInsets.all(15),
                   separatorBuilder: (context, index) => Divider(),
@@ -88,7 +88,7 @@ class ForecastWeatherWidget extends StatelessWidget {
                       children: [
                         Container(
                           width: 100,
-                          child: Text(getDayOfWeekName(list[index].dtTxt.weekday)),
+                          child: Text(getDayOfWeekName(list[index].dtTxt)),
                         ),
                         Container(
                           child: Image.network(
@@ -115,25 +115,26 @@ class ForecastWeatherWidget extends StatelessWidget {
   }
 }
 
-
-String getDayOfWeekName(int dayOfWeek) {
-  switch (dayOfWeek) {
-    case DateTime.monday:
-      return 'Понедельник';
-    case DateTime.tuesday:
-      return 'Вторник';
-    case DateTime.wednesday:
-      return 'Среда';
-    case DateTime.thursday:
-      return 'Четверг';
-    case DateTime.friday:
-      return 'Пятница';
-    case DateTime.saturday:
-      return 'Суббота';
-    case DateTime.sunday:
-      return 'Воскресенье';
-    default:
-      return '';
+String getDayOfWeekName(DateTime dayOfWeek) {
+  DateTime today = DateTime.now();
+  if (dayOfWeek.weekday == today.weekday) {
+    return "Сегодня";
+  } else if (dayOfWeek.weekday == DateTime.monday) {
+    return "Понедельник";
+  } else if (dayOfWeek.weekday == DateTime.tuesday) {
+    return 'Вторник';
+  } else if (dayOfWeek.weekday == DateTime.wednesday) {
+    return 'Среда';
+  } else if (dayOfWeek.weekday == DateTime.thursday) {
+    return 'Четверг';
+  } else if (dayOfWeek.weekday == DateTime.friday) {
+    return 'Пятница';
+  } else if (dayOfWeek.weekday == DateTime.saturday) {
+    return 'Суббота';
+  } else if (dayOfWeek.weekday == DateTime.sunday) {
+    return 'Воскресенье';
+  } else {
+    return 'invalid type';
   }
 }
 
