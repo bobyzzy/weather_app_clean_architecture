@@ -13,16 +13,17 @@ class GetCurrentWeather extends UseCase<DailyWeatherEntity, PositionParams> {
   GetCurrentWeather(this.repository);
 
   Future<Either<Failure, DailyWeatherEntity>> call(PositionParams params) async {
-    return await repository.getDailyWeather(params.lat, params.lon);
+    return await repository.getDailyWeather(params.lat, params.lon, params.locale);
   }
 }
 
 class PositionParams extends Equatable {
   final double lat;
   final double lon;
+  final String locale;
 
-  PositionParams({required this.lat, required this.lon});
+  PositionParams({required this.lat, required this.lon, required this.locale});
 
   @override
-  List<Object?> get props => [lat, lon];
+  List<Object?> get props => [lat, lon, locale];
 }

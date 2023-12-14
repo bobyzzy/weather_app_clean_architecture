@@ -7,9 +7,9 @@ import 'package:waether_app_using_api_openweather/features/weather/data/model/fo
 import 'package:http/http.dart' as http;
 
 abstract class RemoteDataSource {
-  Future<DailyWeatherModel> getCurrentWeatherRemote(double lat, double lon);
-  Future<ForecastWeatherModel> getForecastWeatherRemote(double lat, double lon);
-  Future<DailyWeatherModel> getSearchDataRemote(String query);
+  Future<DailyWeatherModel> getCurrentWeatherRemote(double lat, double lon, String locale);
+  Future<ForecastWeatherModel> getForecastWeatherRemote(double lat, double lon, String locale);
+  Future<DailyWeatherModel> getSearchDataRemote(String query, String locale);
 }
 
 class RemoteDataSourceImpl implements RemoteDataSource {
@@ -17,10 +17,18 @@ class RemoteDataSourceImpl implements RemoteDataSource {
 
   RemoteDataSourceImpl({required this.client});
   @override
-  Future<DailyWeatherModel> getCurrentWeatherRemote(double lat, double lon) async {
+  Future<DailyWeatherModel> getCurrentWeatherRemote(double lat, double lon, String locale) async {
     const String api = Constants.API_CLIENT;
+    late String units;
+
+    if (locale == 'en') {
+      units = 'imperial';
+    } else if (locale == 'ru') {
+      units = 'metric';
+    }
+
     final String url =
-        'https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&lang=ru&units=metric&appid=$api';
+        'https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&lang=$locale&units=$units&appid=$api';
     final response = await client.get(Uri.parse(url));
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
@@ -31,10 +39,18 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   }
 
   @override
-  Future<ForecastWeatherModel> getForecastWeatherRemote(double lat, double lon) async {
+  Future<ForecastWeatherModel> getForecastWeatherRemote(
+      double lat, double lon, String locale) async {
     const String api = Constants.API_CLIENT;
+    late String units;
+
+    if (locale == 'en') {
+      units = 'imperial';
+    } else if (locale == 'ru') {
+      units = 'metric';
+    }
     final String url =
-        'https://api.openweathermap.org/data/2.5/forecast?lat=$lat&lon=$lon&units=metric&lang=ru&appid=$api';
+        'https://api.openweathermap.org/data/2.5/forecast?lat=$lat&lon=$lon&units=$units&lang=$locale&appid=$api';
 
     final response = await client.get(Uri.parse(url));
     if (response.statusCode == 200) {
@@ -45,10 +61,17 @@ class RemoteDataSourceImpl implements RemoteDataSource {
     }
   }
 
-  Future<DailyWeatherModel> getSearchDataRemote(String query) async {
+  Future<DailyWeatherModel> getSearchDataRemote(String query, String locale) async {
     const String api = Constants.API_CLIENT;
+    late String units;
+
+    if (locale == 'en') {
+      units = 'imperial';
+    } else if (locale == 'ru') {
+      units = 'metric';
+    }
     final String url =
-        'https://api.openweathermap.org/data/2.5/weather?q=$query&lang=ru&units=metric&appid=$api';
+        'https://api.openweathermap.org/data/2.5/weather?q=$query&lang=$locale&units=$units&appid=$api';
 
     final respone = await client.get(Uri.parse(url));
     if (respone.statusCode == 200) {

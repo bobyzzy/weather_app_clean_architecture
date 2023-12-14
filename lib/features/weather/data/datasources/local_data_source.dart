@@ -10,8 +10,11 @@ import 'package:waether_app_using_api_openweather/features/weather/data/model/fo
 abstract class LocalDataSource {
   Future<DailyWeatherModel> getLastCurrentWeatherFromCache();
   Future<ForecastWeatherModel> getLastForecastWeatherFromCache();
+  Future<int> getLastConnection();
+
   Future<void> currentWeatherToCache(DailyWeatherModel dailyWeather);
   Future<void> forecastWeatherToCache(ForecastWeatherModel forecastWeather);
+  Future<void> LastConnectionToCache(int lastConnection);
 }
 
 class WeatherLocalDataImpl implements LocalDataSource {
@@ -46,7 +49,6 @@ class WeatherLocalDataImpl implements LocalDataSource {
     }
   }
 
-
   @override
   Future<ForecastWeatherModel> getLastForecastWeatherFromCache() {
     final jsonforecastWeather = sharedPreferences.getString(Constants.CACHED_FORECAST_WEAHTER);
@@ -55,5 +57,17 @@ class WeatherLocalDataImpl implements LocalDataSource {
     } else {
       return Future.value(ForecastWeatherModel.fromJson(json.decode(jsonforecastWeather)));
     }
+  }
+  
+  @override
+  Future<void> LastConnectionToCache(int lastConnection) {
+    // TODO: implement LastConnectionToCache
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<int> getLastConnection() {
+    // TODO: implement getLastConnection
+    throw UnimplementedError();
   }
 }

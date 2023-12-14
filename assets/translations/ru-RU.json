@@ -1,0 +1,18 @@
+{
+	"Weather App": "Приложения погоды",
+	"Temperature": "\u2103",
+	"Current Location": "Current Location",
+	"Max": "Макс",
+	"Min": "Мин",
+	"3hours Data": "Данные отображаются с интервалом в 3 часа",
+	"Enter city": "Введите город",
+	"Today": "Сегодня",
+	"Monday": "Понедельник",
+	"Tuesday": "Вторник",
+	"Wednesday": "Среда",
+	"Thursday": "Четверг",
+	"Friday": "Пятница",
+	"Saturday": "Суббота",
+	"Sunday": "Воскресенье",
+	"Invalid Type": "Пожалуйста, введите действительный город"
+}

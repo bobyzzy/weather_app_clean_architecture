@@ -1,0 +1,18 @@
+{
+	"Weather App": "Weather app",
+	"Temperature": "\u2109",
+	"Current Location": "Current Location",
+	"Max": "Max",
+	"Min": "Min",
+	"3hours Data": "Data is displayed at 3 hour intervals",
+	"Enter city": "Enter city",
+	"Today": "Today",
+	"Monday": "Monday",
+	"Tuesday": "Tuesday",
+	"Wednesday": "Wednesday",
+	"Thursday": "Thursday",
+	"Friday": "Friday",
+	"Saturday": "Saturday",
+	"Sunday": "Sunday",
+	"Invalid Type": "Please enter a valid city"
+}

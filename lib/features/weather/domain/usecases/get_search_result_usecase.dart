@@ -13,12 +13,13 @@ class GetSearchResult extends UseCase<DailyWeatherEntity, SearchParams> {
 
   @override
   Future<Either<Failure, DailyWeatherEntity>> call(SearchParams params) async {
-    return await repository.searchCityWeather(params.query);
+    return await repository.searchCityWeather(params.query, params.locale);
   }
 }
 
 class SearchParams {
   final String query;
+  final String locale;
 
-  SearchParams({required this.query});
+  SearchParams({required this.query, required this.locale});
 }

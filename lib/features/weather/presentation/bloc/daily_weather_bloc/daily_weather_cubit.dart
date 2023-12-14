@@ -14,12 +14,12 @@ class DailyWeatherCubit extends Cubit<WeatherState> {
   DailyWeatherCubit({required this.getCurrentWeather, required this.geolocationImpl})
       : super(DailyWeatherEmpty());
 
-  void loadWeather() async {
+  void loadWeather(String? locale) async {
     if (state is DailyWeatherLoading) return;
 
     final position = await geolocationImpl.geolocatorInfo();
-    final failureOrDailyWeather =
-        await getCurrentWeather(PositionParams(lat: position.latitude, lon: position.longitude));
+    final failureOrDailyWeather = await getCurrentWeather(
+        PositionParams(lat: position.latitude, lon: position.longitude, locale: locale ?? 'en'));
     print(failureOrDailyWeather);
 
     failureOrDailyWeather.fold((error) {

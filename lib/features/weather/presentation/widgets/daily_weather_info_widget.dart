@@ -1,5 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:waether_app_using_api_openweather/core/constants/app_dimens.dart';
 import 'package:waether_app_using_api_openweather/core/constants/constants.dart';
 import 'package:waether_app_using_api_openweather/features/weather/domain/entities/daily_weather_entity.dart';
@@ -15,23 +15,24 @@ class CurrentWeatherWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: 30),
+            SizedBox(height: 15),
             Text(
-              "Текущее место",
+              "Current Location".tr(),
               style: TextStyle(fontSize: 24),
             ),
             SizedBox(height: AppDimens.MARGIN_6),
             Text(weather.name),
             SizedBox(height: 10),
-            Text('${weather.main.temp.toInt()}' + '\u2103', style: TextStyle(fontSize: 32)),
+            Text('${weather.main.temp.toInt()}' + "Temperature".tr(),
+                style: TextStyle(fontSize: 32)),
             SizedBox(height: 5),
             Text(weather.weather.first.description),
             SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Text("Макс: ${weather.main.tempMin.toInt()} \u2103"),
-                Text("Мин: ${weather.main.tempMin.toInt()} \u2103"),
+                Text("Max".tr() + ":${weather.main.tempMin.toInt()} " + "Temperature".tr()),
+                Text("Min".tr() + ":${weather.main.tempMin.toInt()} " + "Temperature".tr()),
               ],
             ),
             SizedBox(height: 10),
@@ -114,9 +115,7 @@ class WeatherInfoCustomWidget extends StatelessWidget {
 }
 
 String formatDate(int timeStamp) {
-  print(timeStamp);
   DateTime date = DateTime.fromMillisecondsSinceEpoch(timeStamp * 1000, isUtc: true);
-  String formatDate = DateFormat('HH:mm', 'en_US').format(date.toLocal());
-  print(formatDate);
+  String formatDate = DateFormat('HH:mm').format(date.toLocal());
   return formatDate;
 }

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:waether_app_using_api_openweather/core/constants/app_dimens.dart';
@@ -19,7 +20,7 @@ class ForecastWeatherWidget extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: AppDimens.MARGIN_24),
-                child: Text("Данные отображаются с интервалом 3 часа"),
+                child: Text("3hours Data".tr()),
               ),
               SizedBox(height: 10),
               Container(
@@ -52,7 +53,7 @@ class ForecastWeatherWidget extends StatelessWidget {
                           'https://openweathermap.org/img/wn/${data[index].weather.first.icon}@2x.png',
                           scale: 2,
                         ),
-                        Text(data[index].main.temp.toInt().toString() + ' \u2103'),
+                        Text("${data[index].main.temp.toInt().toString()} " + 'Temperature'.tr()),
                       ],
                     );
                   },
@@ -96,7 +97,7 @@ class ForecastWeatherWidget extends StatelessWidget {
                             scale: 2,
                           ),
                         ),
-                        Text("${list[index].main.temp.toInt()} \u2103"),
+                        Text("${list[index].main.temp.toInt()} " + "Temperature".tr()),
                         SizedBox(width: 40),
                         Expanded(child: Text("${list[index].weather.first.description}")),
                       ],
@@ -118,21 +119,21 @@ class ForecastWeatherWidget extends StatelessWidget {
 String getDayOfWeekName(DateTime dayOfWeek) {
   DateTime today = DateTime.now();
   if (dayOfWeek.weekday == today.weekday) {
-    return "Сегодня";
+    return "Today".tr();
   } else if (dayOfWeek.weekday == DateTime.monday) {
-    return "Понедельник";
+    return "Monday".tr();
   } else if (dayOfWeek.weekday == DateTime.tuesday) {
-    return 'Вторник';
+    return 'Tuesday'.tr();
   } else if (dayOfWeek.weekday == DateTime.wednesday) {
-    return 'Среда';
+    return 'Wednesday'.tr();
   } else if (dayOfWeek.weekday == DateTime.thursday) {
-    return 'Четверг';
+    return 'Thursday'.tr();
   } else if (dayOfWeek.weekday == DateTime.friday) {
-    return 'Пятница';
+    return 'Friday'.tr();
   } else if (dayOfWeek.weekday == DateTime.saturday) {
-    return 'Суббота';
+    return 'Saturday'.tr();
   } else if (dayOfWeek.weekday == DateTime.sunday) {
-    return 'Воскресенье';
+    return 'Sunday'.tr();
   } else {
     return 'invalid type';
   }

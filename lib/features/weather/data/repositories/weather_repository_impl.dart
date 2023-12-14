@@ -23,23 +23,25 @@ class WeatherRepositoryImpl implements WeatherRepository {
   });
 
   @override
-  Future<Either<Failure, DailyWeatherEntity>> getDailyWeather(double lat, double lon) async {
+  Future<Either<Failure, DailyWeatherEntity>> getDailyWeather(
+      double lat, double lon, String locale) async {
     return await _getDailyWeather(() {
-      return remoteDataSource.getCurrentWeatherRemote(lat, lon);
+      return remoteDataSource.getCurrentWeatherRemote(lat, lon,locale);
     });
   }
 
   @override
-  Future<Either<Failure, ForecastWeatherEntity>> getForecastWeather(double lat, double lon) async {
+  Future<Either<Failure, ForecastWeatherEntity>> getForecastWeather(
+      double lat, double lon, String locale) async {
     return await _getForecastWeather(() {
-      return remoteDataSource.getForecastWeatherRemote(lat, lon);
+      return remoteDataSource.getForecastWeatherRemote(lat, lon,locale);
     });
   }
 
   @override
-  Future<Either<Failure, DailyWeatherEntity>> searchCityWeather(String nameCity) async {
+  Future<Either<Failure, DailyWeatherEntity>> searchCityWeather(String nameCity,String locale) async {
     return await _getSearchData(() {
-      return remoteDataSource.getSearchDataRemote(nameCity);
+      return remoteDataSource.getSearchDataRemote(nameCity,locale);
     });
   }
 

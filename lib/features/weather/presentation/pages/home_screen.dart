@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:waether_app_using_api_openweather/core/constants/constants.dart';
 import 'package:waether_app_using_api_openweather/features/weather/presentation/bloc/daily_weather_bloc/daily_weater_state.dart';
 import 'package:waether_app_using_api_openweather/features/weather/presentation/bloc/daily_weather_bloc/daily_weather_cubit.dart';
@@ -10,6 +13,7 @@ import 'package:waether_app_using_api_openweather/features/weather/presentation/
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
+  //TODO:Добавить свои ассеты на погоды а то когда выключается инет приложения останавливается
   @override
   Widget build(BuildContext context) {
     return Scaffold(

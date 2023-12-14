@@ -1,7 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:waether_app_using_api_openweather/core/constants/constants.dart';
-import 'package:waether_app_using_api_openweather/features/weather/presentation/bloc/daily_weather_bloc/daily_weather_cubit.dart';
 import 'package:waether_app_using_api_openweather/features/weather/presentation/bloc/search_weather_bloc/saerch_weather_state.dart';
 import 'package:waether_app_using_api_openweather/features/weather/presentation/bloc/search_weather_bloc/search_weather_cubit.dart';
 import 'package:waether_app_using_api_openweather/features/weather/presentation/widgets/daily_weather_info_widget.dart';
@@ -13,6 +13,7 @@ class SearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final local = context.locale.languageCode;
     return Scaffold(
       backgroundColor: Constants.LIGHT_THEME_DARK_BLUE_COLOR,
       appBar: AppBar(
@@ -22,11 +23,11 @@ class SearchScreen extends StatelessWidget {
           width: MediaQuery.of(context).size.width * 0.65,
           child: SearchBar(
             controller: searchController,
-            hintText: 'Введите город',
+            hintText: 'Enter City'.tr(),
             trailing: [
               IconButton(
                   onPressed: () {
-                    context.read<SearchWeatherCubit>().onPressed(searchController.text);
+                    context.read<SearchWeatherCubit>().onPressed(searchController.text, local);
                     searchController.clear();
                   },
                   icon: Icon(Icons.search)),
@@ -38,16 +39,18 @@ class SearchScreen extends StatelessWidget {
         builder: (context, state) {
           if (state is SearchWEatherLoading) {
             return Center(child: CircularProgressIndicator());
-          } else if (state is SearchWeatherEmpty) {
+          } else if (state is SearchWEatherLoading) {
             return Center(
-              child: Text("no data"),
+              child: CircularProgressIndicator(),
             );
           } else if (state is SearchWeatherLoaded) {
             return Center(
               child: CurrentWeatherWidget(weather: state.data),
             );
+          } else if (state is SearchWeatherEmpty) {
+            return Container();
           } else {
-            throw ArgumentError();
+            return Center(child: Text("Invalid Type".tr()));
           }
         },
       ),

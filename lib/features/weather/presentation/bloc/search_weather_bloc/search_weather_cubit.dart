@@ -11,8 +11,9 @@ class SearchWeatherCubit extends Cubit<SearchWeatherState> {
 
   SearchWeatherCubit({required this.getSearchResult}) : super(SearchWeatherEmpty());
 
-  void onPressed(String query) async {
-    final failureOrResult = await getSearchResult.call(SearchParams(query: query));
+  void onPressed(String query, String? locale) async {
+    final failureOrResult =
+        await getSearchResult.call(SearchParams(query: query, locale: locale ?? 'en'));
 
     emit(SearchWEatherLoading());
 

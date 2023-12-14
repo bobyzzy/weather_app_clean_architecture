@@ -16,11 +16,12 @@ class ForecastWeatherCubit extends Cubit<ForecastWeatherState> {
     required this.geolocationImpl,
   }) : super(ForecastWeatherEmpty());
 
-  void loadForecastData() async {
+  void loadForecastData(String? locale) async {
     if (state is ForecastWeatherLoading) return;
 
     final position = await geolocationImpl.geolocatorInfo();
-    final failureOrdata = await getForecastWeather(PositionForecastParams(lat: position.latitude, lon: position.longitude));
+    final failureOrdata = await getForecastWeather(PositionForecastParams(
+        lat: position.latitude, lon: position.longitude, locale: locale ?? 'en'));
     print(failureOrdata);
 
     failureOrdata.fold((error) {
