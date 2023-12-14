@@ -49,9 +49,10 @@ class ForecastWeatherWidget extends StatelessWidget {
                     return Column(
                       children: [
                         Text(data[index].dtTxt.hour.toString()),
-                        Image.network(
-                          'https://openweathermap.org/img/wn/${data[index].weather.first.icon}@2x.png',
-                          scale: 2,
+                        Container(
+                          width: 30,
+                          margin: EdgeInsets.all(10),
+                          child: Image.asset('assets/icons/${data[index].weather.first.icon}.png'),
                         ),
                         Text("${data[index].main.temp.toInt().toString()} " + 'Temperature'.tr()),
                       ],
@@ -92,11 +93,13 @@ class ForecastWeatherWidget extends StatelessWidget {
                           child: Text(getDayOfWeekName(list[index].dtTxt)),
                         ),
                         Container(
-                          child: Image.network(
-                            'https://openweathermap.org/img/wn/${list[index].weather.first.icon}@2x.png',
-                            scale: 2,
+                          width: 50,
+                          child: Image.asset(
+                            'assets/icons/${list[index].weather.first.icon}.png',
+                            scale: 15,
                           ),
                         ),
+                        SizedBox(width: 10),
                         Text("${list[index].main.temp.toInt()} " + "Temperature".tr()),
                         SizedBox(width: 40),
                         Expanded(child: Text("${list[index].weather.first.description}")),

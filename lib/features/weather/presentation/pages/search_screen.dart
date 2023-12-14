@@ -23,7 +23,7 @@ class SearchScreen extends StatelessWidget {
           width: MediaQuery.of(context).size.width * 0.65,
           child: SearchBar(
             controller: searchController,
-            hintText: 'Enter City'.tr(),
+            hintText: 'Enter city'.tr(),
             trailing: [
               IconButton(
                   onPressed: () {
